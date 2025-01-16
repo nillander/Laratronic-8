@@ -1,9 +1,20 @@
-# Startup project
+# Laratronic
 
 ```bash
 sail up --build --remove-orphans -d
+sail composer update
 sail composer install
-sail artisan db:seed
+sail artisan migrate:fresh --seed
+sail stop
+sail up --build -d
+sail npm install
+sail npm run build
+sail npm run dev
+```
+
+Para criar um usuário diretamente no banco sem migrations faça:
+
+```bash
 sail tinker
 ```
 ```php
@@ -15,10 +26,36 @@ User::create([
     'password' => bcrypt('password'),
 ]);
 ```
+
+
+### Atualizar pacotes node
+
+O pacote `npm-check-updates` (NCU) permite atualizar todas as dependências no package.json para a versão mais recente disponível, independentemente do intervalo especificado.
+Instalar o npm-check-updates:
+Se ainda não tiver o pacote instalado, instale globalmente:
 ```bash
-npm install
-npm run dev
+sail npm install -g npm-check-updates
 ```
+
+Atualizar todas as dependências no package.json:
+Execute o comando para listar quais dependências podem ser atualizadas:
+```bash
+sail npx npm-check-updates
+```
+
+Para atualizar diretamente no package.json:
+```bash
+sail npx npm-check-updates -u
+```
+Isso ajustará o arquivo `package.json`, definindo todas as dependências para suas versões mais recentes.
+
+
+### Instalar Dependências Atualizadas
+Após atualizar o package.json, instale as dependências:
+```bash
+sail npm install
+```
+
 
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
